@@ -53,8 +53,6 @@ after_initialize do
       request.add_field('Content-Type', 'application/json')
       request.body = params.to_json
       
-      Rails.logger.error("#{request.body}")
-
       response = http.request(request)
       case response
       when Net::HTTPSuccess then
