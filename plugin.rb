@@ -52,6 +52,8 @@ after_initialize do
       request = Net::HTTP::Post.new(uri.path)
       request.add_field('Content-Type', 'application/json')
       request.body = params.to_json
+      
+      Rails.logger.error("#{request.body}")
 
       response = http.request(request)
       case response
