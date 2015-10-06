@@ -48,12 +48,16 @@ after_initialize do
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true if uri.scheme == 'https'
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless SiteSetting.webhooks_verify_ssl
+      
+      Rails.logger.error("verify mode: #{http.verify_mode}")
 
       request = Net::HTTP::Post.new(uri.path)
       request.add_field('Content-Type', 'application/json')
       request.body = params.to_json
       
+      Rails.logger.error("sending request")
       response = http.request(request)
+      Rails.logger.error("request sent")
       case response
       when Net::HTTPSuccess then
         # nothing
